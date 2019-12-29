@@ -78,7 +78,7 @@ Note that the query doesn't need explicit type.
 
 ## Query expansions
 
-The query `q` of the functions indicated before are expanded when some known object types or patterns are found. For now, they just detect that `q` is a string that looks like an `ObjectId`:
+The query `q` of the functions indicated before are expanded when some known object types or patterns are found. For now, they just detect that `q` is an `ObjectId` or a string that looks like an `ObjectId`:
 
 ```js
 db.col.set("5e07ce013dca4d04ea3f6552", {text:"hello"})
@@ -94,7 +94,7 @@ db.col.update({_id: ObjectId("5e07ce013dca4d04ea3f6552")}, {$set:{text:"hello"}}
 
 You may override the query expansions or add more of your own. After loading the `mongodb-shell-extensions.js`, modify the `MongoUtil.expandQuery` function.
 
-Here's an example where we want to expand a query that looks like an email, and in that case search by `{email: query}` . This code could be in the `~/.mongorc.js` file.
+Here's an example where we want to expand a query that looks like an email to `{email: query}` . This code could be in the `~/.mongorc.js` file.
 
 ```js
 load("mongodb-shell-extensions.js");

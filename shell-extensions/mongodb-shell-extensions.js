@@ -42,7 +42,6 @@ DBCollection.prototype.set = function(query, updates, multi, upsert) {
 
 /**
  * This is like insert but, for type-safety reasons, numbers must be specified as Int(x), Long(x) or Double(x)
- *
  * Example: db.players.insert({name:"Max", score:Int(8), height:Double(1.75)})
  */
 DBCollection.prototype.safeInsert = function(object) {
@@ -74,7 +73,7 @@ var MongoUtil = {
 	 * Expands query if known objects or patterns are found.
 	 *
 	 * MongoDB shell sometimes does some expansions. See `db.anyCollection._massageObject`.
-	 * It works for find() and remove() but not for update*() methods.
+	 * But those just work for find() and remove(), not for update*() methods.
 	 */
 	expandQuery: function expandQuery(query) {
 
@@ -82,10 +81,8 @@ var MongoUtil = {
 
 		if (query.isObjectId) { // ObjectId objects have this field to true
 			return {_id: query};
-		} else if (typeof query === "string") {
-			if (MongoUtil.objectIdRegex.test(query)) {
-				return {_id: ObjectId(query)};
-			}
+		} else if (MongoUtil.objectIdRegex.test(query)) {
+			return {_id: ObjectId(query)};
 		}
 
 		return query;
